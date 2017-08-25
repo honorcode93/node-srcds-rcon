@@ -4,17 +4,23 @@ let Connection = require('./lib/connection');
 let packet = require('./lib/packet');
 let util = require('./lib/util');
 
-module.exports = params => {
-    let address = params.address;
-    let password = params.password;
+module.exports = () => {
+    let address = null;
+    let password = null;
     let _connection;
     let nextPacketId;
 
     return Object.freeze({
         connect: connect,
         command: command,
+        dest: dest,
         disconnect: disconnect
     });
+
+    function dest(ip, pass) {
+        address = ip;
+        password = pass;
+    }
 
     function connect() {
         let connection = Connection(address);
